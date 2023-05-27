@@ -1,0 +1,41 @@
+
+<html>
+  <head> 
+    <title>淡江拉麵</title>
+    <link rel="stylesheet" href="vue.css"/>
+  </head>
+  <body>                 
+    <div id="app">
+      <div class="control"> 
+        <label>最小價錢</label>
+        <input v-model.number="minPrice"/>
+        <label>最大價錢</label>
+        <input v-model.number="maxPrice"/>
+        <label>基礎價錢</label>
+        <input v-model.number="basePrice"/>
+        <label>服務費</label>
+        <input v-model.number="serviceFee"/>
+        <label>搜尋文字 </label>
+        <input v-model="keyword" placeholder="請輸入關鍵字"/>
+        <hr/><span v-for="card,cid in cards">
+          <input type="checkbox" v-model="card.soldOut"/><span>{{card.title}}</span>
+          <input v-model.number="card.price"/></span>
+      </div>
+      <div class="menu">
+        <div class="cards">
+          <div class="card" v-for="card in cards" v-if="card.price+basePrice&gt;=minPrice &amp;&amp; card.price+basePrice&lt;=maxPrice &amp;&amp; card.title.indexOf(keyword)!=-1"><img class="cover" v-bind:src="card.cover"/>
+            <div class="info">
+              <h1>{{card.title}}</h1>
+              <div class="soldout" v-show="card.soldOut">已售完</div>
+            </div>
+            <div class="price">${{card.price+basePrice}}
+              <div class="other">(+{{ serviceFee }}%服務費)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.8/vue.js"></script>
+    <script src="vue.js"></script>
+  </body>
+</html>
